@@ -7,6 +7,7 @@ import { getLocations, type LocationItem } from "../utils/storage";
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoiY2luZXRlY2giLCJhIjoiY21odzh6aDZ4MDF3azJqcjIwNGFidm50eSJ9.ljCtSMpyyfpyQ4hwIRnaMA";
 mapboxgl.accessToken = MAPBOX_TOKEN;
+const baseUrl = import.meta.env.BASE_URL || '/';
 
 /* ...existing helper booleanPointInPolygon (unchanged) ... */
 function booleanPointInPolygon(featureOrGeom: any, polyFeatureOrGeom: any): boolean {
@@ -76,9 +77,9 @@ export default function WorldMap({
   highlight = false,
   cities = false,
   city = false,
-  countriesGeojsonUrl = "/countries.geojson",
+  countriesGeojsonUrl = `${baseUrl}countries.geojson`,
   selectedLocation = null,
-  citiesFileUrl = "/cities15000.txt",
+  citiesFileUrl = `${baseUrl}cities15000.txt`,
   data = undefined,
   height = "100vh",
 }: Props) {

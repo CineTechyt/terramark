@@ -21,6 +21,8 @@ const StyledContainer = styled(Container)(({ theme }) => ({
   marginTop: theme.spacing(3),
 }));
 
+const baseUrl = import.meta.env.BASE_URL || '/';
+
 // point-in-polygon helper (minimal; copied/adapted from WorldMap)
 function booleanPointInPolygon(featureOrPoint: any, polyFeatureOrGeom: any): boolean {
   if (!featureOrPoint || !polyFeatureOrGeom) return false;
@@ -90,7 +92,7 @@ export default function StatisticsPage() {
 
         // attempt to fetch countries geojson for country resolution
         try {
-          const cr = await fetch("/countries.geojson");
+          const cr = await fetch(`${baseUrl}countries.geojson`);
           if (cr.ok) {
             const cg = await cr.json();
             if (!cancelled) setCountriesGeojson(cg);

@@ -91,7 +91,9 @@ export default function MapPage() {
     let cancelled = false;
     (async () => {
       try {
-        const response = await fetch("/countries.geojson");
+        const baseUrl = import.meta.env.BASE_URL || '/';
+        const url = `${baseUrl}countries.geojson`.replace(/\/+/g, '/');
+        const response = await fetch(url);
         if (response.ok) {
           const data = await response.json();
           if (!cancelled) setCountriesGeojson(data);
