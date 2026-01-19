@@ -12,11 +12,15 @@ interface WorldHeatMapProps {
 }
 
 export default function WorldHeatMap({ height = "100vh" }: WorldHeatMapProps) {
+  const [mapLoaded, setMapLoaded] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
+
   useEffect(() => {
-    const t = window.setTimeout(() => setShowIntro(false), 10000);
-    return () => clearTimeout(t);
-  }, []);
+    // Hide intro when map is loaded
+    if (mapLoaded) {
+      setShowIntro(false);
+    }
+  }, [mapLoaded]);
 
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -53,6 +57,8 @@ export default function WorldHeatMap({ height = "100vh" }: WorldHeatMapProps) {
     mapRef.current = map;
 
     map.on("load", () => {
+      setMapLoaded(true);
+
       // Load initial data from localStorage
       const locations = getLocations();
       const geojsonData = locationsToGeoJSON(locations);
@@ -120,6 +126,7 @@ export default function WorldHeatMap({ height = "100vh" }: WorldHeatMapProps) {
         mapRef.current.remove();
         mapRef.current = null;
       }
+      setMapLoaded(false);
     };
   }, []);
 
