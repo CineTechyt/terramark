@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import WorldHeatmap from "./components/WorldHeatMap";
 import StatisticsPage from "./pages/StatisticsPage";
@@ -12,13 +12,14 @@ type AppRouterProps = {
 
 export default function AppRouter({ markElement, mapsElement, statisticsElement }: AppRouterProps) {
   return (
-    <BrowserRouter basename="/terramark">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={markElement} />
-        <Route path="/maps" element={mapsElement ?? <div style={{ padding: 24 }}><h2>Maps</h2><WorldHeatmap /></div>} />
-        <Route path="/statistics" element={statisticsElement ?? <StatisticsPage />} />
-      </Routes>
-    </BrowserRouter>
+  <HashRouter>
+    <Navbar />
+    <Routes>
+      <Route path="/" element={markElement} />
+      <Route path="/maps" element={mapsElement} />
+      <Route path="/statistics" element={statisticsElement} />
+    </Routes>
+  </HashRouter>
+
   );
 }
