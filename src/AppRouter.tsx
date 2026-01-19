@@ -12,7 +12,7 @@ type AppRouterProps = {
 
 export default function AppRouter({ markElement, mapsElement, statisticsElement }: AppRouterProps) {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/terramark">
       <Navbar />
       <Routes>
         <Route path="/" element={markElement} />
