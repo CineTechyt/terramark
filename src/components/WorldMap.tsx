@@ -87,12 +87,19 @@ export default function WorldMap({
 
   // show intro only when we have data/highlight/cities
   const shouldShowIntro = Boolean(data) || Boolean(highlight) || showCities;
+  const [mapLoaded, setMapLoaded] = useState(false);
   const [showIntro, setShowIntro] = useState(shouldShowIntro);
+  
   useEffect(() => {
-    if (!shouldShowIntro) return;
-    const t = window.setTimeout(() => setShowIntro(false), 10000);
-    return () => clearTimeout(t);
-  }, [shouldShowIntro]);
+    if (!shouldShowIntro) {
+      setShowIntro(false);
+      return;
+    }
+    // Hide intro when map is loaded
+    if (mapLoaded) {
+      setShowIntro(false);
+    }
+  }, [shouldShowIntro, mapLoaded]);
 
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -115,10 +122,17 @@ export default function WorldMap({
       center: [0, 20],
       zoom: 1.5,
     });
+    
+    // Listen for map load event
+    map.current.on('load', () => {
+      setMapLoaded(true);
+    });
+    
     map.current.addControl(new mapboxgl.NavigationControl(), "top-left");
     return () => {
       try { map.current?.remove(); } catch {}
       map.current = null;
+      setMapLoaded(false);
     };
   }, []);
 
