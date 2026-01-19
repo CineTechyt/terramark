@@ -1,5 +1,5 @@
 import React from "react";
-import { HashRouter, Routes, Route, BrowserRouter } from "react-router-dom";
+import { HashRouter, Routes, Route} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import WorldHeatmap from "./components/WorldHeatMap";
 import StatisticsPage from "./pages/StatisticsPage";
